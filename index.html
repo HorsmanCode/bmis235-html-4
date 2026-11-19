@@ -1,366 +1,126 @@
 <!DOCTYPE html>
-<!--
-  Author: YOUR NAME
-  GU username: YOUR-GU-USERNAME
-  Course: BMIS 235 - HTML-3
--->
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="author" content="Nathaniel Horsman">
-<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Life of Athena</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--text:#f2f2f2;--accent:#ffe600;--card:#111;--border:#2a2a2a;--muted:#aaa;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;font-family:'Bebas Neue',Impact,sans-serif;background:radial-gradient(circle at 50% 38%,#1c1900 0,#000 55%);color:var(--text);letter-spacing:.06em}
 
-<!-- this one line connects the page to the stylesheet -->
-<link rel="stylesheet" href="styles.css">
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:20px 16px 0}
+nav a{color:var(--text);text-decoration:none;font-size:1.25rem;padding:8px 20px;border-radius:999px;border:1px solid transparent;transition:.25s}
+nav a:hover{border-color:var(--accent);color:var(--accent)}
+nav a.active{background:var(--accent);color:#000}
+
+header{text-align:center;padding:34px 16px 8px}
+h1{color:var(--accent);font-weight:400;font-size:clamp(2.4rem,7vw,4.2rem);line-height:1;margin:0}
+.sub{color:var(--muted);font-size:1.3rem;margin:8px 0 0}
+
+.hub{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:60px;max-width:1040px;margin:44px auto 0;padding:0 24px}
+
+/* photo */
+.photo{position:relative;width:340px;height:340px;margin:0 auto}
+.photo::before{content:"";position:absolute;inset:-16px;border:2px dashed var(--accent);border-radius:50%;animation:spin 40s linear infinite}
+.disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 35%,#fff27a,var(--accent) 60%,#c9b600);box-shadow:0 0 60px rgba(255,230,0,.35)}
+.disc img{position:absolute;left:7%;top:7%;width:86%;height:auto;display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.photo::before{animation:none}}
+
+/* cards */
+.card{position:relative;display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px 24px 20px;transition:transform .25s,box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 0 26px rgba(255,230,0,.3)}
+.card .em{font-size:2.4rem}
+.card h2{margin:6px 0 4px;font-weight:400;font-size:2rem;color:var(--accent)}
+.card p{margin:0;color:var(--muted);font-size:1.2rem;letter-spacing:.04em;line-height:1.25}
+.card .go{display:inline-block;margin-top:14px;font-size:1.25rem;color:#000;background:var(--accent);padding:5px 16px;border-radius:999px}
+.card:hover .go{box-shadow:0 0 16px rgba(255,230,0,.6)}
+.c-left::after,.c-right::after{content:"";position:absolute;top:50%;width:60px;height:3px;background:var(--accent);transform:translateY(-50%)}
+.c-left::after{left:100%}.c-right::after{right:100%}
+.c-left{grid-column:1}.photo{grid-column:2}.c-right{grid-column:3}
+.bottom{max-width:420px;margin:60px auto 0;padding:0 24px;position:relative}
+.bottom::before{content:"";position:absolute;left:50%;top:-60px;width:3px;height:60px;background:var(--accent);transform:translateX(-50%)}
+
+/* stat strip */
+.stats{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;max-width:900px;margin:44px auto 0;padding:0 20px}
+.stat{border:1px solid var(--accent);border-radius:999px;padding:8px 22px;font-size:1.35rem}
+.stat span{color:var(--muted);font-size:1rem;margin-right:8px}
+.stat b{font-weight:400;color:var(--accent)}
+
+footer{text-align:center;color:var(--muted);font-size:1rem;padding:40px 16px 40px}
+
+@media (max-width:820px){
+  .hub{grid-template-columns:1fr;gap:22px;margin-top:34px}
+  .photo,.c-left,.c-right{grid-column:1}
+  .photo{margin-bottom:26px}
+  .c-left::after,.c-right::after,.bottom::before{display:none}
+  .bottom{margin-top:22px}
+}
+</style>
 </head>
 <body>
 
-<!-- ===== MENU ============================================================
-     The menu is four links. Each link wraps an image instead of words.
-     Build it once on this page, check that every link works,
-     then copy the whole <nav> block and paste it over the menu on the
-     other three pages, so every page has the exact same menu.
-     ===================================================================== -->
 <nav>
-    <a href="index.html"><img src="img/home.png" alt="Home"></a>
-    <a href="background.html"><img src="img/background.png" alt="background"></a>
-    <a href="personality.html"><img src="img/personality.png" alt="background"></a>
-    <a href="relationship.html"><img src="img/relationship.png" alt="relationship"></a>
+  <a href="index.html" class="active">Home</a>
+  <a href="background.html">Background</a>
+  <a href="personality.html">Personality</a>
+  <a href="relationship.html">Relationship</a>
 </nav>
 
-<h1>The life of Athena</h1>
-<center>
-<p>An overview of a dogs life</p>
+<header>
+  <h1>The Life of Athena</h1>
+  <p class="sub">An overview of a dog’s life</p>
+</header>
 
-<a href="nhorsman@zagmail.gonzaga.edu">Email me</a>
-</center>
-<!-- ===== SAVE THIS SPACE ==============================================
-     This box is empty on purpose. Leave it here. We will use it later.
-     ===================================================================== -->
-<div class="showcase"><!-- HTML: the timeline card. It holds the header, the four story slides, the arrow buttons, the slider and the numbered dots. -->
-<div class="tl" tabindex="0" aria-label="Athena's life timeline">
-  <div class="tl-head">
-    <span class="tl-title">Athena's Timeline</span>
-    <span class="tl-count"><span class="tl-now">1</span> / 4</span>
-  </div>
+<main>
+  <div class="hub">
+    <a class="card c-left" href="background.html">
+      <div class="em">📖</div>
+      <h2>Background</h2>
+      <p>A female Samoyed born April 2024 in Calgary, Alberta.</p>
+      <span class="go">Read more →</span>
+    </a>
 
-  <div class="tl-view">
-    <div class="tl-track">
-
-      <div class="tl-slide">
-        <svg class="tl-icon" viewBox="0 0 64 64" aria-hidden="true">
-          <ellipse cx="32" cy="42" rx="14" ry="11"/>
-          <circle cx="14" cy="28" r="5"/><circle cx="25" cy="17" r="5"/>
-          <circle cx="39" cy="17" r="5"/><circle cx="50" cy="28" r="5"/>
-        </svg>
-        <div class="tl-step">Chapter 01</div>
-        <div class="tl-name">Birth</div>
-        <div class="tl-text">A fluffy white Samoyed named Athena arrives, and the adventure begins.</div>
-      </div>
-
-      <div class="tl-slide">
-        <svg class="tl-icon" viewBox="0 0 64 64" aria-hidden="true">
-          <polygon points="4,52 22,20 32,36 42,26 60,52"/>
-          <polyline points="16,31 22,38 27,31"/>
-        </svg>
-        <div class="tl-step">Chapter 02</div>
-        <div class="tl-name">First Hike</div>
-        <div class="tl-text">Paws on the trail for the first time, with her nose to the wind and tail up high.</div>
-      </div>
-
-      <div class="tl-slide">
-        <svg class="tl-icon" viewBox="0 0 64 64" aria-hidden="true">
-          <path d="M24 6h16v18h18v16H40v18H24V40H6V24h18z"/>
-        </svg>
-        <div class="tl-step">Chapter 03</div>
-        <div class="tl-name">The Porcupine</div>
-        <div class="tl-text">A run-in with a porcupine led to her first emergency visit to the vet.</div>
-      </div>
-
-      <div class="tl-slide">
-        <svg class="tl-icon" viewBox="0 0 64 64" aria-hidden="true">
-          <polygon points="6,30 58,8 40,56 30,36"/>
-          <line x1="30" y1="36" x2="58" y2="8"/>
-        </svg>
-        <div class="tl-step">Chapter 04</div>
-        <div class="tl-name">Beyond Canada</div>
-        <div class="tl-text">Her first trip outside of Canada, and a whole new world to sniff.</div>
-      </div>
-
+    <div class="photo">
+      <div class="disc"><img src="athena.webp" alt="Athena the Samoyed smiling at the camera"></div>
     </div>
+
+    <a class="card c-right" href="personality.html">
+      <div class="em">⚡</div>
+      <h2>Personality</h2>
+      <p>Loves bones, socks and hunting. Hates canoeing, other dogs and hot weather.</p>
+      <span class="go">Read more →</span>
+    </a>
   </div>
 
-  <div class="tl-controls">
-    <button class="tl-btn tl-prev" type="button" aria-label="Previous event">&#8592;</button>
-    <input class="tl-range" type="range" min="0" max="3" step="0.01" value="0" aria-label="Slide through the timeline">
-    <button class="tl-btn tl-next" type="button" aria-label="Next event">&#8594;</button>
+  <div class="bottom">
+    <a class="card" href="relationship.html">
+      <div class="em">👨‍👩‍👦‍👦</div>
+      <h2>Relationship</h2>
+      <p>How Athena sees her dad, mom and three brothers.</p>
+      <span class="go">Read more →</span>
+    </a>
   </div>
 
-  <div class="tl-dots">
-    <button class="tl-dot" type="button" aria-label="Birth">1</button>
-    <button class="tl-dot" type="button" aria-label="First hike">2</button>
-    <button class="tl-dot" type="button" aria-label="Porcupine and vet visit">3</button>
-    <button class="tl-dot" type="button" aria-label="First trip outside Canada">4</button>
+  <div class="stats">
+    <div class="stat"><span>BREED</span><b>Samoyed</b></div>
+    <div class="stat"><span>AGE</span><b id="age">2 years</b></div>
+    <div class="stat"><span>HOME</span><b>Calgary, Alberta</b></div>
+    <div class="stat"><span>FAMILY</span><b>5 members</b></div>
   </div>
-</div>
+</main>
 
-<!-- CSS: white card with black accents, Agency FB font, a fixed 440px height, and a layout that shrinks to fit phones. -->
-<style>
-.showcase .tl {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 720px;
-  height: 440px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  color: #000;
-  border: 3px solid #000;
-  font-family: "Agency FB", "Agency FB Regular", "Arial Narrow", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  overflow: hidden;
-  outline: none;
-}
-.showcase .tl *,
-.showcase .tl *::before,
-.showcase .tl *::after { box-sizing: border-box; }
+<footer>Built by Nathaniel Horsman · BMIS 235</footer>
 
-.showcase .tl-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 16px;
-  background: #000;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 700;
-}
-.showcase .tl-count { font-size: 18px; }
-
-.showcase .tl-view {
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-  cursor: grab;
-  touch-action: pan-y;
-  user-select: none;
-  -webkit-user-select: none;
-}
-.showcase .tl-view:active { cursor: grabbing; }
-.showcase .tl-track {
-  display: flex;
-  height: 100%;
-  will-change: transform;
-}
-.showcase .tl-slide {
-  flex: 0 0 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 12px 22px;
-  overflow: hidden;
-  opacity: 0.25;
-  transition: opacity 0.4s ease;
-}
-.showcase .tl-slide.is-active { opacity: 1; }
-
-.showcase .tl-icon {
-  width: 72px;
-  height: 72px;
-  fill: none;
-  stroke: #000;
-  stroke-width: 3;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  margin-bottom: 10px;
-  flex: 0 0 auto;
-}
-.showcase .tl-step {
-  font-size: 18px;
-  letter-spacing: 0.25em;
-  border-bottom: 3px solid #000;
-  padding-bottom: 4px;
-  margin-bottom: 8px;
-}
-.showcase .tl-name {
-  font-size: clamp(34px, 9vw, 56px);
-  font-weight: 700;
-  line-height: 1;
-  margin-bottom: 10px;
-}
-.showcase .tl-text {
-  max-width: 460px;
-  font-size: clamp(17px, 4.4vw, 22px);
-  line-height: 1.25;
-  letter-spacing: 0.03em;
-}
-
-.showcase .tl-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px 0;
-}
-.showcase .tl-btn {
-  flex: 0 0 auto;
-  width: 40px;
-  height: 40px;
-  border: 3px solid #000;
-  background: #fff;
-  color: #000;
-  font-family: inherit;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0;
-}
-.showcase .tl-btn:hover:not(:disabled) { background: #000; color: #fff; }
-.showcase .tl-btn:disabled { opacity: 0.3; cursor: default; }
-
-.showcase .tl-range {
-  -webkit-appearance: none;
-  appearance: none;
-  flex: 1;
-  min-width: 0;
-  height: 30px;
-  margin: 0;
-  background: transparent;
-  cursor: pointer;
-}
-.showcase .tl-range::-webkit-slider-runnable-track { height: 4px; background: #000; }
-.showcase .tl-range::-moz-range-track { height: 4px; background: #000; }
-.showcase .tl-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 26px;
-  height: 26px;
-  margin-top: -11px;
-  border-radius: 50%;
-  background: #000;
-  border: 4px solid #fff;
-  box-shadow: 0 0 0 2px #000;
-}
-.showcase .tl-range::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #000;
-  border: 4px solid #fff;
-  box-shadow: 0 0 0 2px #000;
-}
-
-.showcase .tl-dots {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 67px 14px;
-}
-.showcase .tl-dot {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 2px solid #000;
-  background: #fff;
-  color: #000;
-  font-family: inherit;
-  font-size: 17px;
-  line-height: 1;
-  padding: 0;
-  cursor: pointer;
-}
-.showcase .tl-dot.is-active { background: #000; color: #fff; }
-
-@media (max-width: 480px) {
-  .showcase .tl-head { font-size: 17px; padding: 8px 12px; }
-  .showcase .tl-icon { width: 56px; height: 56px; margin-bottom: 6px; }
-  .showcase .tl-slide { padding: 8px 16px; }
-  .showcase .tl-controls { gap: 8px; padding: 8px 10px 0; }
-  .showcase .tl-dots { padding: 6px 57px 10px; }
-}
-</style>
-
-<!-- JavaScript: moves the slides when you drag, swipe, use the slider, tap a dot or press an arrow key, then snaps to the nearest event. -->
 <script>
-(function () {
-  var root = document.querySelector('.showcase .tl');
-  if (!root) return;
-
-  var view   = root.querySelector('.tl-view');
-  var track  = root.querySelector('.tl-track');
-  var range  = root.querySelector('.tl-range');
-  var prev   = root.querySelector('.tl-prev');
-  var next   = root.querySelector('.tl-next');
-  var now    = root.querySelector('.tl-now');
-  var dots   = root.querySelectorAll('.tl-dot');
-  var slides = root.querySelectorAll('.tl-slide');
-  var max = slides.length - 1;
-  var pos = 0;
-
-  function render(p, animate) {
-    pos = Math.max(0, Math.min(max, p));
-    track.style.transition = animate ? 'transform 0.45s cubic-bezier(.2,.8,.2,1)' : 'none';
-    track.style.transform = 'translateX(' + (-pos * 100) + '%)';
-    range.value = pos;
-    var i = Math.round(pos);
-    now.textContent = i + 1;
-    prev.disabled = (i === 0);
-    next.disabled = (i === max);
-    for (var d = 0; d < dots.length; d++) {
-      dots[d].classList.toggle('is-active', d === i);
-      slides[d].classList.toggle('is-active', d === i);
-    }
-  }
-
-  function goTo(i) { render(i, true); }
-
-  range.addEventListener('input', function () { render(parseFloat(range.value), false); });
-  range.addEventListener('change', function () { goTo(Math.round(parseFloat(range.value))); });
-
-  prev.addEventListener('click', function () { goTo(Math.round(pos) - 1); });
-  next.addEventListener('click', function () { goTo(Math.round(pos) + 1); });
-  for (var k = 0; k < dots.length; k++) {
-    (function (n) { dots[n].addEventListener('click', function () { goTo(n); }); })(k);
-  }
-
-  var dragging = false, startX = 0, startPos = 0, dx = 0;
-  view.addEventListener('pointerdown', function (e) {
-    dragging = true;
-    startX = e.clientX;
-    startPos = pos;
-    dx = 0;
-    try { view.setPointerCapture(e.pointerId); } catch (err) {}
-  });
-  view.addEventListener('pointermove', function (e) {
-    if (!dragging) return;
-    dx = (e.clientX - startX) / view.offsetWidth;
-    render(startPos - dx, false);
-  });
-  function endDrag() {
-    if (!dragging) return;
-    dragging = false;
-    var target = Math.round(pos);
-    if (Math.abs(dx) > 0.12) {
-      target = Math.round(startPos) + (dx < 0 ? 1 : -1);
-    }
-    goTo(target);
-  }
-  view.addEventListener('pointerup', endDrag);
-  view.addEventListener('pointercancel', endDrag);
-
-  root.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(Math.round(pos) + 1); }
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(Math.round(pos) - 1); }
-  });
-
-  render(0, false);
-})();
-</script></div>
-
-<!-- Footer: fill in your name -->
-<footer>Built by Nathaniel Horsman &middot; BMIS 235</footer>
-
+// Age updates automatically from April 2024
+var born=new Date(2024,3,1),now=new Date();
+var m=(now.getFullYear()-born.getFullYear())*12+now.getMonth()-born.getMonth();
+var y=Math.floor(m/12),r=m%12;
+document.getElementById('age').textContent=y+(y===1?' year':' years')+(r?' '+r+(r===1?' month':' months'):'');
+</script>
 </body>
 </html>
