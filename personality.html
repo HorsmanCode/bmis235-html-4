@@ -27,24 +27,96 @@
     <a href="personality.html"><img src="img/personality.png" alt="background"></a>
     <a href="relationship.html"><img src="img/relationship.png" alt="relationship"></a>
 </nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Athena – Personality</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--text:#f2f2f2;--accent:#ffe600;--card:#111;--border:#2a2a2a;--muted:#aaa;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;font-family:'Bebas Neue',Impact,sans-serif;background:var(--bg);color:var(--text);letter-spacing:.06em}
+
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:20px 16px 0}
+nav a{color:var(--text);text-decoration:none;font-size:1.25rem;padding:8px 20px;border-radius:999px;border:1px solid transparent;transition:.25s}
+nav a:hover{border-color:var(--accent);color:var(--accent)}
+nav a.active{background:var(--accent);color:#000}
+
+h1{color:var(--accent);font-weight:400;text-align:center;font-size:clamp(2.2rem,6vw,3.4rem);margin:36px 16px 6px}
+.sub{text-align:center;color:var(--muted);font-size:1.2rem;margin:0 16px 28px}
+
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
+.panel h2{margin:0 0 18px;font-weight:400;font-size:2rem;display:flex;align-items:center;gap:10px}
+.love h2{color:var(--accent)}
+
+.row{margin-bottom:18px}
+.lab{display:flex;justify-content:space-between;font-size:1.3rem;margin-bottom:6px}
+.bar{height:14px;border-radius:999px;background:#222;overflow:hidden}
+.bar i{display:block;height:100%;width:var(--w);border-radius:999px;animation:grow 1.2s ease-out}
+.love .bar i{background:var(--accent)}
+.hate .bar i{background:repeating-linear-gradient(45deg,#fff 0 8px,#999 8px 16px)}
+@keyframes grow{from{width:0}}
+
+footer{text-align:center;color:var(--muted);font-size:1rem;padding:30px 16px 40px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="background.html">Background</a>
+  <a href="personality.html" class="active">Personality</a>
+  <a href="relationship.html">Relationship</a>
+</nav>
 
 <h1>Personality</h1>
-<center>
-<h2>Loves</h2>
-  <p>Bones,Socks and other chewables</p>
-  <p>Hunting Animals</p>
-  <p>Physical Affection</p>
+<p class="sub">Athena’s loves and hates</p>
 
+<main class="wrap">
+  <div class="two">
 
-<h3>Hates</h3>
-  <p>Canoeing</p>
-  <p>Other Dogs</p>
-  <p>Hot Weather</p>
+    <div class="panel love">
+      <h2>💛 Loves</h2>
+      <div class="row">
+        <div class="lab"><span>Bones, socks &amp; chewables</span><span>95%</span></div>
+        <div class="bar"><i style="--w:95%"></i></div>
+      </div>
+      <div class="row">
+        <div class="lab"><span>Physical affection</span><span>90%</span></div>
+        <div class="bar"><i style="--w:90%"></i></div>
+      </div>
+      <div class="row">
+        <div class="lab"><span>Hunting animals</span><span>85%</span></div>
+        <div class="bar"><i style="--w:85%"></i></div>
+      </div>
+    </div>
 
-</center>
+    <div class="panel hate">
+      <h2>🚫 Hates</h2>
+      <div class="row">
+        <div class="lab"><span>Other dogs</span><span>80%</span></div>
+        <div class="bar"><i style="--w:80%"></i></div>
+      </div>
+      <div class="row">
+        <div class="lab"><span>Hot weather</span><span>75%</span></div>
+        <div class="bar"><i style="--w:75%"></i></div>
+      </div>
+      <div class="row">
+        <div class="lab"><span>Canoeing</span><span>70%</span></div>
+        <div class="bar"><i style="--w:70%"></i></div>
+      </div>
+    </div>
 
-<!-- Footer: fill in your name -->
-<footer>Built by Nathaniel Horsman &middot; BMIS 235</footer>
+  </div>
+</main>
+
+<footer>Built by Nathaniel Horsman · BMIS 235</footer>
 
 </body>
 </html>
+
