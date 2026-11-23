@@ -4,7 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Digital Spider Web</title>
+
+<title>My Digital Universe</title>
 
 <style>
 * {
@@ -14,7 +15,7 @@
 }
 
 body {
-  background: #05060d;
+  background: #03050c;
   overflow: hidden;
   font-family: Arial, sans-serif;
   color: white;
@@ -26,67 +27,69 @@ canvas {
 
 #title {
   position: fixed;
-  top: 25px;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
   text-align: center;
+  z-index: 10;
   pointer-events: none;
+  width: 100%;
 }
 
 #title h1 {
-  font-size: 26px;
-  letter-spacing: 5px;
+  font-size: clamp(20px, 4vw, 32px);
   font-weight: 300;
-  text-shadow: 0 0 15px #70dfff;
+  letter-spacing: 6px;
+  text-shadow: 0 0 20px #00cfff;
 }
 
 #title p {
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 11px;
-  letter-spacing: 3px;
-  color: #9bbacb;
+  letter-spacing: 4px;
+  color: #a5c9dc;
 }
 
 #instructions {
   position: fixed;
-  bottom: 22px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
-  color: #91a8b8;
-  font-size: 11px;
-  letter-spacing: 2px;
   text-align: center;
-  pointer-events: none;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #9ab6c8;
   z-index: 10;
+  width: 100%;
+  pointer-events: none;
 }
 
 #viewer {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 20;
-  background: rgba(0,0,0,.94);
+  background: rgba(0,0,0,.96);
+  z-index: 30;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
 #viewer img,
 #viewer video {
   max-width: 90vw;
-  max-height: 80vh;
-  border: 1px solid #5ceaff;
-  box-shadow: 0 0 30px #00bfff55;
+  max-height: 82vh;
+  border: 1px solid #00d9ff;
+  box-shadow: 0 0 35px #00cfff55;
 }
 
 #close {
   position: absolute;
-  top: 25px;
+  top: 20px;
   right: 30px;
-  font-size: 32px;
-  cursor: pointer;
+  font-size: 40px;
   color: white;
+  cursor: pointer;
+  z-index: 40;
 }
 </style>
 </head>
@@ -110,13 +113,13 @@ canvas {
 
 <script>
 
-// ===================================
-// 1. CREATE THE 3D SCENE
-// ===================================
+// ==========================================
+// 1. CREATE THE SCENE
+// ==========================================
 
 const scene = new THREE.Scene();
 
-scene.background = new THREE.Color(0x05060d);
+scene.background = new THREE.Color(0x03050c);
 
 const camera = new THREE.PerspectiveCamera(
   65,
@@ -132,110 +135,146 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+renderer.setPixelRatio(
+  Math.min(window.devicePixelRatio, 2)
+);
 
 document.body.appendChild(renderer.domElement);
 
 
-// ===================================
+// ==========================================
 // 2. LIGHTING
-// ===================================
+// ==========================================
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-scene.add(ambientLight);
+scene.add(
+  new THREE.AmbientLight(0xffffff, 1.3)
+);
 
-const blueLight = new THREE.PointLight(0x00cfff, 3, 60);
+const blueLight = new THREE.PointLight(
+  0x00cfff,
+  3,
+  70
+);
+
 blueLight.position.set(5, 5, 10);
+
 scene.add(blueLight);
 
 
-// ===================================
-// 3. MAIN SPIDER WEB GROUP
-// ===================================
+// ==========================================
+// 3. MAIN WEB GROUP
+// ==========================================
 
 const group = new THREE.Group();
+
 scene.add(group);
 
 
-// ===================================
-// 4. CREATE THE WEB STRUCTURE
-// ===================================
+// ==========================================
+// 4. CREATE SPHERICAL WEB POINTS
+// ==========================================
 
 const nodes = [];
 
 const nodeCount = 180;
+
 const radius = 8;
 
 for (let i = 0; i < nodeCount; i++) {
 
-  const phi = Math.acos(1 - 2 * (i + 0.5) / nodeCount);
-  const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+  const phi = Math.acos(
+    1 - 2 * (i + 0.5) / nodeCount
+  );
 
-  const x = radius * Math.sin(phi) * Math.cos(theta);
-  const y = radius * Math.sin(phi) * Math.sin(theta);
-  const z = radius * Math.cos(phi);
+  const theta =
+    Math.PI * (1 + Math.sqrt(5)) * i;
 
-  nodes.push(new THREE.Vector3(x, y, z));
+  const x =
+    radius * Math.sin(phi) * Math.cos(theta);
+
+  const y =
+    radius * Math.sin(phi) * Math.sin(theta);
+
+  const z =
+    radius * Math.cos(phi);
+
+  nodes.push(
+    new THREE.Vector3(x, y, z)
+  );
+
 }
 
 
-// ===================================
-// 5. DRAW THE WEB LINES
-// ===================================
+// ==========================================
+// 5. CONNECT THE POINTS WITH WEB LINES
+// ==========================================
 
 const lineMaterial = new THREE.LineBasicMaterial({
-  color: 0x35cfff,
+  color: 0x27cfff,
   transparent: true,
-  opacity: 0.35
+  opacity: 0.4
 });
 
 for (let i = 0; i < nodes.length; i++) {
 
   for (let j = i + 1; j < nodes.length; j++) {
 
-    const distance = nodes[i].distanceTo(nodes[j]);
+    const distance =
+      nodes[i].distanceTo(nodes[j]);
 
     if (distance < 2.8) {
 
-      const geometry = new THREE.BufferGeometry().setFromPoints([
-        nodes[i],
-        nodes[j]
-      ]);
+      const geometry =
+        new THREE.BufferGeometry().setFromPoints([
+          nodes[i],
+          nodes[j]
+        ]);
 
-      const line = new THREE.Line(geometry, lineMaterial);
+      const line =
+        new THREE.Line(geometry, lineMaterial);
 
       group.add(line);
+
     }
+
   }
+
 }
 
 
-// ===================================
-// 6. ADD GLOWING WEB NODES
-// ===================================
+// ==========================================
+// 6. ADD GLOWING NODES
+// ==========================================
 
-const nodeGeometry = new THREE.SphereGeometry(0.045, 8, 8);
+const nodeGeometry =
+  new THREE.SphereGeometry(0.045, 8, 8);
 
-const nodeMaterial = new THREE.MeshBasicMaterial({
-  color: 0x8ceeff
-});
+const nodeMaterial =
+  new THREE.MeshBasicMaterial({
+    color: 0x9ceeff
+  });
 
 nodes.forEach(position => {
 
-  const dot = new THREE.Mesh(nodeGeometry, nodeMaterial);
+  const dot = new THREE.Mesh(
+    nodeGeometry,
+    nodeMaterial
+  );
 
   dot.position.copy(position);
 
   group.add(dot);
+
 });
 
 
-// ===================================
-// 7. ADD YOUR PHOTOS AND VIDEOS
-// ===================================
+// ==========================================
+// 7. YOUR PHOTOS AND VIDEOS
+// ==========================================
 
-// Replace these example image URLs with your own.
-// For GitHub Pages, you can upload photos into an "images" folder.
+// Replace these sample URLs with your own files.
+// Example: images/photo1.jpg
 
 const mediaItems = [
 
@@ -278,20 +317,25 @@ const mediaItems = [
 
 const cards = [];
 
-const loader = new THREE.TextureLoader();
+const textureLoader = new THREE.TextureLoader();
 
 mediaItems.forEach((item, index) => {
 
   const position = nodes[index * 12];
 
-  const geometry = new THREE.PlaneGeometry(1.7, 1.25);
+  const geometry =
+    new THREE.PlaneGeometry(1.7, 1.25);
 
-  const material = new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    side: THREE.DoubleSide
-  });
+  const material =
+    new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      side: THREE.DoubleSide
+    });
 
-  const card = new THREE.Mesh(geometry, material);
+  const card = new THREE.Mesh(
+    geometry,
+    material
+  );
 
   card.position.copy(position);
 
@@ -303,16 +347,18 @@ mediaItems.forEach((item, index) => {
 
   if (item.type === "image") {
 
-    loader.load(item.url, texture => {
+    textureLoader.load(
+      item.url,
+      texture => {
 
-      card.material.map = texture;
-      card.material.needsUpdate = true;
+        card.material.map = texture;
+        card.material.needsUpdate = true;
 
-    });
+      }
+    );
 
   } else {
 
-    // A video placeholder panel
     card.material.color.set(0x123044);
 
   }
@@ -320,15 +366,16 @@ mediaItems.forEach((item, index) => {
 });
 
 
-// ===================================
-// 8. ADD BACKGROUND STARS
-// ===================================
+// ==========================================
+// 8. BACKGROUND STARS
+// ==========================================
 
-const starGeometry = new THREE.BufferGeometry();
+const starGeometry =
+  new THREE.BufferGeometry();
 
 const starPositions = [];
 
-for (let i = 0; i < 900; i++) {
+for (let i = 0; i < 1000; i++) {
 
   starPositions.push(
     (Math.random() - 0.5) * 80,
@@ -340,22 +387,29 @@ for (let i = 0; i < 900; i++) {
 
 starGeometry.setAttribute(
   "position",
-  new THREE.Float32BufferAttribute(starPositions, 3)
+  new THREE.Float32BufferAttribute(
+    starPositions,
+    3
+  )
 );
 
-const starMaterial = new THREE.PointsMaterial({
-  color: 0x9ccfff,
-  size: 0.045
-});
+const starMaterial =
+  new THREE.PointsMaterial({
+    color: 0x9ccfff,
+    size: 0.045
+  });
 
-const stars = new THREE.Points(starGeometry, starMaterial);
+const stars = new THREE.Points(
+  starGeometry,
+  starMaterial
+);
 
 scene.add(stars);
 
 
-// ===================================
-// 9. MOUSE AND TOUCH ROTATION
-// ===================================
+// ==========================================
+// 9. MOUSE AND TOUCH CONTROLS
+// ==========================================
 
 let dragging = false;
 
@@ -368,85 +422,106 @@ let ry = 0;
 let targetX = 0;
 let targetY = 0;
 
-renderer.domElement.addEventListener("pointerdown", event => {
+renderer.domElement.addEventListener(
+  "pointerdown",
+  event => {
 
-  dragging = true;
+    dragging = true;
 
-  previousX = event.clientX;
-  previousY = event.clientY;
+    previousX = event.clientX;
+    previousY = event.clientY;
 
-});
+  }
+);
 
-window.addEventListener("pointerup", () => {
+window.addEventListener(
+  "pointerup",
+  () => {
 
-  dragging = false;
+    dragging = false;
 
-});
+  }
+);
 
-window.addEventListener("pointermove", event => {
+window.addEventListener(
+  "pointermove",
+  event => {
 
-  if (!dragging) return;
+    if (!dragging) return;
 
-  const movementX = event.clientX - previousX;
-  const movementY = event.clientY - previousY;
+    const movementX =
+      event.clientX - previousX;
 
-  targetY += movementX * 0.005;
-  targetX += movementY * 0.005;
+    const movementY =
+      event.clientY - previousY;
 
-  previousX = event.clientX;
-  previousY = event.clientY;
+    targetY += movementX * 0.005;
 
-});
+    targetX += movementY * 0.005;
 
+    previousX = event.clientX;
+    previousY = event.clientY;
 
-// ===================================
-// 10. SCROLL TO ZOOM
-// ===================================
-
-window.addEventListener("wheel", event => {
-
-  camera.position.z += event.deltaY * 0.01;
-
-  camera.position.z = Math.max(
-    10,
-    Math.min(40, camera.position.z)
-  );
-
-});
+  }
+);
 
 
-// ===================================
-// 11. CLICK PHOTOS TO OPEN THEM
-// ===================================
+// ==========================================
+// 10. ZOOM CONTROL
+// ==========================================
+
+window.addEventListener(
+  "wheel",
+  event => {
+
+    camera.position.z += event.deltaY * 0.01;
+
+    camera.position.z = Math.max(
+      10,
+      Math.min(40, camera.position.z)
+    );
+
+  }
+);
+
+
+// ==========================================
+// 11. OPEN PHOTOS AND VIDEOS
+// ==========================================
 
 const raycaster = new THREE.Raycaster();
+
 const mouse = new THREE.Vector2();
 
-const viewer = document.getElementById("viewer");
+const viewer =
+  document.getElementById("viewer");
 
-renderer.domElement.addEventListener("click", event => {
+renderer.domElement.addEventListener(
+  "click",
+  event => {
 
-  if (Math.abs(event.clientX - previousX) > 5 ||
-      Math.abs(event.clientY - previousY) > 5) {
-    // Ignore a click that was part of a drag
-  }
+    mouse.x =
+      (event.clientX / window.innerWidth) * 2 - 1;
 
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    mouse.y =
+      -(event.clientY / window.innerHeight) * 2 + 1;
 
-  raycaster.setFromCamera(mouse, camera);
+    raycaster.setFromCamera(mouse, camera);
 
-  const hits = raycaster.intersectObjects(cards);
+    const hits =
+      raycaster.intersectObjects(cards);
 
-  if (hits.length > 0) {
+    if (hits.length === 0) return;
 
     const item = hits[0].object.userData;
 
-    viewer.innerHTML = '<span id="close">&times;</span>';
+    viewer.innerHTML =
+      '<span id="close">&times;</span>';
 
     if (item.type === "image") {
 
-      const image = document.createElement("img");
+      const image =
+        document.createElement("img");
 
       image.src = item.url;
 
@@ -454,9 +529,11 @@ renderer.domElement.addEventListener("click", event => {
 
     } else {
 
-      const video = document.createElement("video");
+      const video =
+        document.createElement("video");
 
       video.src = item.url;
+
       video.controls = true;
       video.autoplay = true;
 
@@ -466,114 +543,146 @@ renderer.domElement.addEventListener("click", event => {
 
     viewer.style.display = "flex";
 
-    document.getElementById("close").onclick = () => {
+    document.getElementById("close").onclick =
+      () => {
 
-      viewer.style.display = "none";
-      viewer.innerHTML = '<span id="close">&times;</span>';
+        viewer.style.display = "none";
 
-    };
+        viewer.innerHTML =
+          '<span id="close">&times;</span>';
+
+      };
+
+  }
+);
+
+
+// Close viewer when clicking outside media
+viewer.addEventListener("click", event => {
+
+  if (event.target === viewer) {
+
+    viewer.style.display = "none";
+    viewer.innerHTML =
+      '<span id="close">&times;</span>';
 
   }
 
 });
 
 
-
-// ===================================
-// 12. SLOW DOWN, SPEED UP, THEN SLOW AGAIN
-// ===================================
+// ==========================================
+// 12. SPEED UP FAST THEN SLOW DOWN
+// ==========================================
 
 let rotationTime = 0;
 
-// Change these values to customize the effect
-const slowSpeed = 0.00035;
-const fastSpeed = 0.012;
-const cycleDuration = 12000; // 12 seconds
+let previousFrameTime = 0;
 
-function animate() {
+// Rotation settings
+const slowSpeed = 0.00035;
+
+const fastSpeed = 0.012;
+
+// Full cycle in milliseconds
+const cycleDuration = 12000;
+
+
+// ==========================================
+// 13. ANIMATION LOOP
+// ==========================================
+
+function animate(timestamp) {
 
   requestAnimationFrame(animate);
 
-  // Progress through a repeating 12-second cycle
-  rotationTime += 16;
+  if (!previousFrameTime) {
+    previousFrameTime = timestamp;
+  }
 
-  const progress = (rotationTime % cycleDuration) / cycleDuration;
+  const deltaTime = Math.min(
+    timestamp - previousFrameTime,
+    50
+  );
 
-  // Smooth acceleration and deceleration
+  previousFrameTime = timestamp;
+
+  // Advance animation based on elapsed time
+  rotationTime += deltaTime;
+
+  const progress =
+    (rotationTime % cycleDuration) /
+    cycleDuration;
+
   let speed;
 
   if (progress < 0.5) {
 
-    // First half: slowly accelerate
+    // Accelerate during the first half
     const t = progress / 0.5;
-    const smooth = t * t * (3 - 2 * t);
 
-    speed = slowSpeed + (fastSpeed - slowSpeed) * smooth;
+    const smooth =
+      t * t * (3 - 2 * t);
+
+    speed =
+      slowSpeed +
+      (fastSpeed - slowSpeed) * smooth;
 
   } else {
 
-    // Second half: gradually slow down
+    // Decelerate during the second half
     const t = (progress - 0.5) / 0.5;
-    const smooth = t * t * (3 - 2 * t);
 
-    speed = fastSpeed + (slowSpeed - fastSpeed) * smooth;
+    const smooth =
+      t * t * (3 - 2 * t);
+
+    speed =
+      fastSpeed +
+      (slowSpeed - fastSpeed) * smooth;
 
   }
 
-  // Automatic rotation
+  // Automatic rotation pauses while dragging
   if (!dragging) {
-    targetY += speed;
+
+    targetY += speed * (deltaTime / 16.67);
+
   }
 
-  // Smooth manual and automatic movement
+  // Smooth rotation
   rx += (targetX - rx) * 0.025;
+
   ry += (targetY - ry) * 0.025;
 
   group.rotation.x = rx;
+
   group.rotation.y = ry;
 
   // Keep photos facing the camera
   cards.forEach(card => {
+
     card.lookAt(camera.position);
+
   });
 
+  // Slowly rotate background stars
   stars.rotation.y += 0.0001;
 
   renderer.render(scene, camera);
 
 }
 
-animate();
-
-  // Smooth manual and automatic movement
-  rx += (targetX - rx) * 0.025;
-  ry += (targetY - ry) * 0.025;
-
-  group.rotation.x = rx;
-  group.rotation.y = ry;
-
-  // Keep photo panels facing the camera
-  cards.forEach(card => {
-    card.lookAt(camera.position);
-  });
-
-  // Slowly move the stars
-  stars.rotation.y += 0.0001;
-
-  renderer.render(scene, camera);
-
-}
-
-animate();
+requestAnimationFrame(animate);
 
 
-// ===================================
-// 13. RESPONSIVE WINDOW RESIZING
-// ===================================
+// ==========================================
+// 14. MOBILE AND DESKTOP RESIZING
+// ==========================================
 
 window.addEventListener("resize", () => {
 
-  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.aspect =
+    window.innerWidth / window.innerHeight;
 
   camera.updateProjectionMatrix();
 
