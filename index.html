@@ -478,20 +478,72 @@ renderer.domElement.addEventListener("click", event => {
 });
 
 
+
 // ===================================
-// 12. SLOW CONTINUOUS ROTATION
+// 12. SLOW DOWN, SPEED UP, THEN SLOW AGAIN
 // ===================================
 
-const rotationSpeed = 0.0015;
+let rotationTime = 0;
+
+// Change these values to customize the effect
+const slowSpeed = 0.00035;
+const fastSpeed = 0.012;
+const cycleDuration = 12000; // 12 seconds
 
 function animate() {
 
   requestAnimationFrame(animate);
 
-  // Slowly rotate automatically when you are not dragging
-  if (!dragging) {
-    targetY += rotationSpeed;
+  // Progress through a repeating 12-second cycle
+  rotationTime += 16;
+
+  const progress = (rotationTime % cycleDuration) / cycleDuration;
+
+  // Smooth acceleration and deceleration
+  let speed;
+
+  if (progress < 0.5) {
+
+    // First half: slowly accelerate
+    const t = progress / 0.5;
+    const smooth = t * t * (3 - 2 * t);
+
+    speed = slowSpeed + (fastSpeed - slowSpeed) * smooth;
+
+  } else {
+
+    // Second half: gradually slow down
+    const t = (progress - 0.5) / 0.5;
+    const smooth = t * t * (3 - 2 * t);
+
+    speed = fastSpeed + (slowSpeed - fastSpeed) * smooth;
+
   }
+
+  // Automatic rotation
+  if (!dragging) {
+    targetY += speed;
+  }
+
+  // Smooth manual and automatic movement
+  rx += (targetX - rx) * 0.025;
+  ry += (targetY - ry) * 0.025;
+
+  group.rotation.x = rx;
+  group.rotation.y = ry;
+
+  // Keep photos facing the camera
+  cards.forEach(card => {
+    card.lookAt(camera.position);
+  });
+
+  stars.rotation.y += 0.0001;
+
+  renderer.render(scene, camera);
+
+}
+
+animate();
 
   // Smooth manual and automatic movement
   rx += (targetX - rx) * 0.025;
