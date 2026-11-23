@@ -270,100 +270,86 @@ nodes.forEach(position => {
 
 
 // ==========================================
-// 7. YOUR PHOTOS AND VIDEOS
+// 7. ADD 11 EQUALLY DISTRIBUTED PHOTOS
 // ==========================================
-
-// Replace these sample URLs with your own files.
-// Example: images/photo1.jpg
-
-const mediaItems = [
-
-  {
-    type: "image",
-    url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800"
-  },
-
-  {
-    type: "image",
-    url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800"
-  },
-
-  {
-    type: "image",
-    url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800"
-  },
-
-  {
-    type: "image",
-    url: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800"
-  },
-
-  {
-    type: "image",
-    url: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800"
-  },
-
-  {
-    type: "image",
-    url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800"
-  },
-
-  {
-    type: "video",
-    url: "https://www.w3schools.com/html/mov_bbb.mp4"
-  }
-
-];
 
 const cards = [];
 
 const textureLoader = new THREE.TextureLoader();
 
-mediaItems.forEach((item, index) => {
+// Put your 11 photo paths here
+const photoUrls = [
+  "images/photo1.jpg",
+  "images/photo2.jpg",
+  "images/photo3.jpg",
+  "images/photo4.jpg",
+  "images/photo5.jpg",
+  "images/photo6.jpg",
+  "images/photo7.jpg",
+  "images/photo8.jpg",
+  "images/photo9.jpg",
+  "images/photo10.jpg",
+  "images/photo11.jpg"
+];
 
-  const position = nodes[index * 12];
+const photoCount = 11;
+const photoRadius = 8.8;
 
-  const geometry =
-    new THREE.PlaneGeometry(1.7, 1.25);
+// Golden angle gives an even distribution over a sphere
+const goldenAngle = Math.PI * (3 - Math.sqrt(5));
 
-  const material =
-    new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      side: THREE.DoubleSide
-    });
+for (let i = 0; i < photoCount; i++) {
 
-  const card = new THREE.Mesh(
-    geometry,
-    material
+  const y = 1 - (i / (photoCount - 1)) * 2;
+
+  const radiusAtY = Math.sqrt(1 - y * y);
+
+  const theta = goldenAngle * i;
+
+  const x = Math.cos(theta) * radiusAtY;
+  const z = Math.sin(theta) * radiusAtY;
+
+  const position = new THREE.Vector3(
+    x * photoRadius,
+    y * photoRadius,
+    z * photoRadius
   );
+
+  const geometry = new THREE.PlaneGeometry(2, 1.5);
+
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide
+  });
+
+  const card = new THREE.Mesh(geometry, material);
 
   card.position.copy(position);
 
-  card.userData = item;
+  // Make each photo face outward from the sphere
+  card.lookAt(
+    position.clone().multiplyScalar(2)
+  );
+
+  card.userData = {
+    type: "image",
+    url: photoUrls[i]
+  };
 
   group.add(card);
 
   cards.push(card);
 
-  if (item.type === "image") {
+  textureLoader.load(
+    photoUrls[i],
+    texture => {
+      card.material.map = texture;
+      card.material.needsUpdate = true;
+    }
+  );
 
-    textureLoader.load(
-      item.url,
-      texture => {
+}
 
-        card.material.map = texture;
-        card.material.needsUpdate = true;
-
-      }
-    );
-
-  } else {
-
-    card.material.color.set(0x123044);
-
-  }
-
-});
 
 
 // ==========================================
